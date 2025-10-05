@@ -9,7 +9,7 @@ This library uses the `GlyphX` code for encoding Hieroglyphs.
 A library for converting GlyphX to MdC and back is planned. If you only want to calculate the Dimensions and Positions (`Bounds`) of each sign, then you can use the `MAAT`-library:\
 [cristmasbox/MAAT](https://github.com/cristmasbox/MAAT)
 
-## Implemetation with jitpack
+## Implementation with jitpack
 Add this to your `settings.gradle.kts` at the end of repositories:
 ```
 dependencyResolutionManagement {
