@@ -39,3 +39,9 @@ dependencies {
 
 > [!IMPORTANT]
 > If you renamed the `.aar` file you also have to change the name in the dependencies
+
+## Version Catalog
+### 05.10.2025@1.0.0
+This is the first release of the THOTH library.
+### latest Version
+`05.10.2025@1.0.0`
