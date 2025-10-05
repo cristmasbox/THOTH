@@ -19,7 +19,3 @@ dependencyResolutionManagement {
         maven { url = uri("https://jitpack.io") }
     }
 }
-
-rootProject.name = "THOTH Example App"
-include(":app")
-include(":thoth")
