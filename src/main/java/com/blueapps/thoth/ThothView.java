@@ -46,8 +46,8 @@ public class ThothView extends View {
 
     // Attributes
     private String text = "<ancientText><v><sign id=\"r\"/><sign id=\"Z1\"/></v><v><sign id=\"n\"/><sign id=\"km\"/></v><sign id=\"m\"/><v><sign id=\"t\"/><sign id=\"O49\"/></v></ancientText>";
-    private String altText = "";
-    private int altTextSize = height / 2;
+    private String altText = "";//TODO
+    private int altTextSize = height / 2;//TODO
     private boolean showAltText = true;
     private @ColorInt int altTextColor = Color.BLACK;
     private @ColorInt int backgroundColor = Color.TRANSPARENT;
@@ -277,6 +277,7 @@ public class ThothView extends View {
 
     public void setAltTextColor(@ColorInt int color){
         this.altTextColor = color;
+        textPaint.setColor(color);
         this.invalidate();
     }
 
@@ -295,6 +296,20 @@ public class ThothView extends View {
 
     public void testAltText(boolean b){
         this.testAltText = b;
+        storage.clearLayoutCache();
+        renderThread = new Thread(renderRunnable);
+        renderThread.start();
+        unlockDrawing = false;
+        this.invalidate();
+    }
+
+    public int getAltTextSize(){
+        return altTextSize;
+    }
+
+    public void setAltTextSize(int size){
+        this.altTextSize = size;
+        textPaint.setTextSize(size);
         this.invalidate();
     }
 
