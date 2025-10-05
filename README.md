@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/cristmasbox/THOTH.svg)](https://jitpack.io/#cristmasbox/THOTH)
 
-# THOTH (Transliteration and Hieroglyph Output Textview Helperclass)
+# THOTH (Transliteration and Hieroglyph Output Textview Helper class)
 An android library with a custom TextView for displaying Egyptian hieroglyphs by using the `GlyphX` code.
 
 ## Disclaimer
@@ -42,6 +42,43 @@ dependencies {
 
 > [!IMPORTANT]
 > If you renamed the `.aar` file you also have to change the name in the dependencies
+
+## Usage
+### Insert into Layout XML
+Put this code into your `layout.xml`:
+```
+<com.blueapps.thoth.ThothView
+    android:id="@+id/thothView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="40sp"
+    app:backgroundColor="#fff"
+    app:primarySignColor="#000"
+    app:altTextColor="#000"
+    app:altTextSize="20sp"
+    app:altText="Km.t m in.t hapi"
+    app:showAltText="true"
+    app:verticalOrientation="middle"
+    app:writingLayout="lines" />
+```
+Here I will explain all the possible xml Attributes:
+
+- `android:textSize`: Height of one line of big hieroglyphs. *Default: `200px`*
+- `app:verticalOrientation`: This parameter can only have three values and defines the vertical position of smaller signs (like `n`): *Default: `middle`*
+  - `top`: Put signs to the top of the line
+  - `middle`: Center signs vertically
+  - `bottom`: Drop signs on Baseline
+- `app:writingLayout`: This parameter also have two possible values and determines if signs should be written in lines or in columns: *Default: `lines`*
+  - `lines`: Write signs in lines
+  - `columns`: Write signs in columns
+- `app:altText`: Alternative text which is displayed when hieroglyphs are loaded into memory.
+- `app:showAltText`: Determines whether the alternative text should be displayed or not. *Default: `true`*
+- `app:altTextSize`: Sets the text size of the alternative Text. *Default: 1/2 of the `android:textSize`*
+- `app:altTextColor`: Defines the color of the alternative Text. *Default: `#000000`*
+- `app:primarySignColor`: Defines the color of the hieroglyphs. *Default: `#000000`*
+- `app:backgroundColor`: Defines the background color of the view. *Default: `transparent`*
+
+
 
 ## Version Catalog
 ### 05.10.2025@1.0.0
