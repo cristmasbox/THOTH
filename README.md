@@ -75,7 +75,7 @@ Here I will explain all the possible xml Attributes:
 - `app:showAltText`: Determines whether the alternative text should be displayed or not. *Default: `true`*
 - `app:altTextSize`: Sets the text size of the alternative Text. *Default: 1/2 of the `android:textSize`*
 - `app:altTextColor`: Defines the color of the alternative Text. *Default: `#000000`*
-- `app:primarySignColor`: Defines the color of the hieroglyphs. *Default: `#000000`*
+- `app:primarySignColor`: Defines the color of the hieroglyphs. Default: `#000000`
 - `app:backgroundColor`: Defines the background color of the view. *Default: `transparent`*
 
 
