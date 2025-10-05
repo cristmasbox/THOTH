@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ThothView">
+        <attr name="altText" format="reference|string"/>
+        <attr name="altTextSize" format="dimension"/>
+        <attr name="showAltText" format="boolean"/>
+        <attr name="altTextColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="primarySignColor" format="color"/>
+        <attr name="android:textSize"/>
+        <attr name="verticalOrientation" format="enum">
+            <enum name="top" value="0"/>
+            <enum name="middle" value="1"/>
+            <enum name="bottom" value="2"/>
+        </attr>
+        <!--attr name="writingDirection" format="enum">
+            <enum name="LTR" value="0"/>
+            <enum name="RTL" value="1"/>
+        </attr!-->
+        <attr name="writingLayout" format="enum">
+            <enum name="lines" value="0"/>
+            <enum name="columns" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>

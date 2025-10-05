@@ -1,0 +1,255 @@
+package com.blueapps.thoth;
+
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
+import android.util.AttributeSet;
+import android.view.View;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.ViewTreeViewModelStoreOwner;
+
+import com.blueapps.maat.BoundCalculation;
+import com.blueapps.maat.BoundProperty;
+import com.blueapps.thoth.cache.CacheStorage;
+
+public class ThothView extends View {
+
+    // Constants
+    private static final String TAG = "ThothView";
+    // Database Data
+    public static final String FILENAME_DRAWABLE_IDS = "Databases/Drawable_Ids.csv";
+    public static final String FILENAME_DRAWABLE_PATHS = "Databases/Drawable_Paths.csv";
+
+    protected int width = 50;
+    protected int height = 200;
+
+    protected int widthMeasureSpec;
+    protected int heightMeasureSpec;
+
+    protected boolean unlockDrawing = false;
+
+    private Thread renderThread = new Thread();
+    private RenderRunnable renderRunnable;
+
+    private CacheStorage storage;
+    private RenderClass renderClass;
+
+    // Paints
+    private Paint textPaint = new Paint();
+
+    // Attributes
+    private String text = "<ancientText><v><sign id=\"r\"/><sign id=\"Z1\"/></v><v><sign id=\"n\"/><sign id=\"km\"/></v><sign id=\"m\"/><v><sign id=\"t\"/><sign id=\"O49\"/></v></ancientText>";
+    private String altText = "";
+    private int altTextSize = height / 2;
+    private boolean showAltText = true;
+    private @ColorInt int altTextColor = Color.BLACK;
+    private @ColorInt int backgroundColor = Color.TRANSPARENT;
+    private @ColorInt int primarySignColor = Color.BLACK;
+    private int textSize = 200;
+    private int verticalOrientation = BoundProperty.VERTICAL_ORIENTATION_MIDDLE;
+    private int writingDirection = BoundProperty.WRITING_DIRECTION_LTR;
+    private int writingLayout = BoundProperty.WRITING_LAYOUT_LINES;
+
+    public ThothView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ThothView, defStyleAttr, defStyleRes);
+        setAttrs(a);
+    }
+
+    public ThothView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ThothView, defStyleAttr, 0);
+        setAttrs(a);
+    }
+
+    public ThothView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ThothView);
+        setAttrs(a);
+    }
+
+    public ThothView(Context context) {
+        super(context);
+    }
+
+    private void setAttrs(TypedArray a){
+        altText = a.getString(R.styleable.ThothView_altText);
+        altTextSize = a.getDimensionPixelSize(R.styleable.ThothView_altTextSize, height / 2);
+        showAltText = a.getBoolean(R.styleable.ThothView_showAltText, true);
+        altTextColor = a.getColor(R.styleable.ThothView_altTextColor, Color.BLACK);
+        backgroundColor = a.getColor(R.styleable.ThothView_backgroundColor, Color.TRANSPARENT);
+        primarySignColor = a.getColor(R.styleable.ThothView_primarySignColor, Color.BLACK);
+        textSize = a.getDimensionPixelSize(R.styleable.ThothView_android_textSize, 200);
+        verticalOrientation = a.getInteger(R.styleable.ThothView_verticalOrientation, 1);
+        //writingDirection = a.getInteger(R.styleable.ThothView_writingDirection, 0);
+        writingLayout = a.getInteger(R.styleable.ThothView_writingLayout, 0);
+
+        a.recycle();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        // For Android Studio Preview Render
+        try {
+
+            super.onAttachedToWindow();
+
+            ViewModelStoreOwner owner = ViewTreeViewModelStoreOwner.get(this);
+            if (owner != null && (storage == null || renderClass == null)) {
+                storage = new ViewModelProvider(owner).get(CacheStorage.class);
+                renderClass = new ViewModelProvider(owner).get(RenderClass.class);
+            }
+
+            renderClass.setParams(this);
+            storage.setParams(this.getContext(), renderClass);
+            setText(text);
+
+            renderRunnable = new RenderRunnable(this, renderClass);
+            renderThread = new Thread(renderRunnable);
+            renderThread.start();
+
+            textPaint.setTextSize(altTextSize);
+            textPaint.setColor(altTextColor);
+
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDraw(@NonNull Canvas canvas) {
+        canvas.drawARGB(Color.alpha(backgroundColor),
+                Color.red(backgroundColor),
+                Color.green(backgroundColor),
+                Color.blue(backgroundColor));
+
+        if (unlockDrawing){
+            int counter = 0;
+            for (String id : storage.getIds()) {
+                Drawable drawable = storage.getDrawable(id);
+                drawable.setBounds(storage.getBounds().get(counter));
+                if (drawable instanceof VectorDrawable){
+                    VectorDrawable drawable1 = (VectorDrawable) drawable;
+                    drawable1.setTint(primarySignColor);
+                    drawable1.draw(canvas);
+                } else {
+                    drawable.draw(canvas);
+                }
+                counter++;
+            }
+        } else {
+            if (showAltText) {
+                canvas.drawText(altText, 0, altTextSize + (height - altTextSize) / 2, textPaint);
+            }
+        }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        if (writingLayout == 0) {
+            height = textSize;
+        } else {
+            width = textSize;
+        }
+
+        if (!unlockDrawing && showAltText){
+            width = (int) textPaint.measureText(altText);
+        }
+
+        this.widthMeasureSpec = widthMeasureSpec;
+        this.heightMeasureSpec = heightMeasureSpec;
+
+        int mWidth;
+        int mHeight;
+
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (widthMode == MeasureSpec.EXACTLY) {
+            mWidth = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            mWidth = Math.min(width, widthSize);
+        } else {
+            mWidth = width;
+        }
+
+        if (heightMode == MeasureSpec.EXACTLY) {
+            mHeight = heightSize;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            mHeight = Math.min(height, heightSize);
+        } else {
+            mHeight = height;
+        }
+
+        setMeasuredDimension(mWidth, mHeight);
+    }
+
+    public CacheStorage getStorage(){
+        return storage;
+    }
+
+    public String getText(){
+        return text;
+    }
+
+    public void setText(String text){
+        this.text = text;
+        storage.setGlyphXContent(text);
+        storage.refreshCache();
+        renderThread = new Thread(renderRunnable);
+        renderThread.start();
+    }
+
+    public int getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(int textSize){
+        this.textSize = textSize;
+        storage.clearLayoutCache();
+        renderThread = new Thread(renderRunnable);
+        renderThread.start();
+    }
+
+    public int getVerticalOrientation(){
+        return verticalOrientation;
+    }
+
+    public void setVerticalOrientation(int verticalOrientation){
+        if (verticalOrientation < 3 && verticalOrientation > -1) {
+            this.verticalOrientation = verticalOrientation;
+            storage.clearLayoutCache();
+            renderThread = new Thread(renderRunnable);
+            renderThread.start();
+        }
+    }
+
+    public int getWritingDirection(){
+        return writingDirection;
+    }
+
+    public int getWritingLayout(){
+        return writingLayout;
+    }
+
+    public void setWritingLayout(int writingLayout){
+        if (writingLayout == 0 || writingLayout == 1){
+            this.writingLayout = writingLayout;
+            storage.clearLayoutCache();
+            renderThread = new Thread(renderRunnable);
+            renderThread.start();
+        }
+    }
+
+}
