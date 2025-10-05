@@ -44,7 +44,7 @@ dependencies {
 > If you renamed the `.aar` file you also have to change the name in the dependencies
 
 ## Usage
-### Insert into Layout XML
+### Usage in Layout XML
 Put this code into your `layout.xml`:
 ```
 <com.blueapps.thoth.ThothView
@@ -65,12 +65,12 @@ Here I will explain all the possible xml Attributes:
 
 - `android:textSize`: Height of one line of big hieroglyphs. *Default: `200px`*
 - `app:verticalOrientation`: This parameter can only have three values and defines the vertical position of smaller signs (like `n`): *Default: `middle`*
-  - `top`: Put signs to the top of the line
-  - `middle`: Center signs vertically
-  - `bottom`: Drop signs on Baseline
+  - `top`: Put signs to the top of the line  *In the code this equals `0`*
+  - `middle`: Center signs vertically        *In the code this equals `1`*
+  - `bottom`: Drop signs on Baseline         *In the code this equals `2`*
 - `app:writingLayout`: This parameter also have two possible values and determines if signs should be written in lines or in columns: *Default: `lines`*
-  - `lines`: Write signs in lines
-  - `columns`: Write signs in columns
+  - `lines`: Write signs in lines            *In the code this equals `0`*
+  - `columns`: Write signs in columns        *In the code this equals `1`*
 - `app:altText`: Alternative text which is displayed when hieroglyphs are loaded into memory.
 - `app:showAltText`: Determines whether the alternative text should be displayed or not. *Default: `true`*
 - `app:altTextSize`: Sets the text size of the alternative Text. *Default: 1/2 of the `android:textSize`*
@@ -78,7 +78,23 @@ Here I will explain all the possible xml Attributes:
 - `app:primarySignColor`: Defines the color of the hieroglyphs. *Default: `#000000`*
 - `app:backgroundColor`: Defines the background color of the view. *Default: `transparent`*
 
+### Changing values at runtime
+To change the Attributes during runtime, you can call the `getter` and `setter` for the values. For example:
+```
+binding.thothView.setTextSize(200);     // Set the value for the textSize in pixels
+```
 
+You can also use some other functions which are explained here:
+
+- `getText()`: Returns the hieroglyphic text as `GlyphX`-String.
+- `isAltTextTested()`: Returns whether the view is in `AltTextTesting`-Mode or not.
+- `setText(String text)`: Change the hieroglyphic text during runtime by transferring the text as `GlyphX`-String.
+- `testAltText(boolean b)`: Enable or disable `AltTestTesting`-Mode. If `AltTestTesting`-Mode is enabled, the hieroglyph will not be rendered
+and the view will act like if the hieroglyphs are currently loaded into memory. This is useful for testing how the alternative text looks like.
+
+> [!NOTE]
+> Currently the view isn't displaying the alternative text correctly.\
+> Especially when the `altTextSize` is very big, the text is not centered vertically.
 
 ## Version Catalog
 ### 05.10.2025@1.0.0
