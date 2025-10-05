@@ -3,6 +3,12 @@ plugins {
     id("maven-publish")
 }
 
+repositories {
+    google()
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
+
 android {
     namespace = "com.blueapps.thoth"
     compileSdk = 36
