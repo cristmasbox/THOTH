@@ -287,6 +287,7 @@ public class ThothView extends View {
 
     public void showAltText(boolean b){
         this.showAltText = b;
+        this.requestLayout();
         this.invalidate();
     }
 
