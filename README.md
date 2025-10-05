@@ -68,7 +68,7 @@ Here I will explain all the possible xml Attributes:
   - `top`: Put signs to the top of the line  *In the code this equals `0`*
   - `middle`: Center signs vertically        *In the code this equals `1`*
   - `bottom`: Drop signs on Baseline         *In the code this equals `2`*
-- `app:writingLayout`: This parameter also have two possible values and determines if signs should be written in lines or in columns: *Default: `lines`*
+- `app:writingLayout`: This parameter only have two possible values and determines if signs should be written in lines or in columns: *Default: `lines`*
   - `lines`: Write signs in lines            *In the code this equals `0`*
   - `columns`: Write signs in columns        *In the code this equals `1`*
 - `app:altText`: Alternative text which is displayed when hieroglyphs are loaded into memory.
@@ -89,7 +89,7 @@ You can also use some other functions which are explained here:
 - `getText()`: Returns the hieroglyphic text as `GlyphX`-String.
 - `isAltTextTested()`: Returns whether the view is in `AltTextTesting`-Mode or not.
 - `setText(String text)`: Change the hieroglyphic text during runtime by transferring the text as `GlyphX`-String.
-- `testAltText(boolean b)`: Enable or disable `AltTestTesting`-Mode. If `AltTestTesting`-Mode is enabled, the hieroglyph will not be rendered
+- `testAltText(boolean b)`: Enable or disable `AltTextTesting`-Mode. If `AltTextTesting`-Mode is enabled, the hieroglyph will not be rendered
 and the view will act like if the hieroglyphs are currently loaded into memory. This is useful for testing how the alternative text looks like.
 
 > [!NOTE]
