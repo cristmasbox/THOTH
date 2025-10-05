@@ -26,23 +26,25 @@ public class RenderRunnable implements Runnable {
     @Override
     public void run() {
 
-        try {
-            renderClass.renderGlyphXDocument();
+        if (!thothView.isAltTextTested()) {
+            try {
+                renderClass.renderGlyphXDocument();
 
-            storage.getBounds();
+                storage.getBounds();
 
-            thothView.width = (int) storage.getBoundCalculation().getXCursor();
-            thothView.height = (int) storage.getBoundCalculation().getYCursor();
+                thothView.width = (int) storage.getBoundCalculation().getXCursor();
+                thothView.height = (int) storage.getBoundCalculation().getYCursor();
 
-            thothView.unlockDrawing = true;
+                thothView.unlockDrawing = true;
 
-            new Handler(Looper.getMainLooper()).post(() -> {
-                thothView.requestLayout();
-                thothView.invalidate();
-            });
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    thothView.requestLayout();
+                    thothView.invalidate();
+                });
 
-        } catch (ParserConfigurationException | IOException | SAXException e){
-            e.printStackTrace();
+            } catch (ParserConfigurationException | IOException | SAXException e) {
+                e.printStackTrace();
+            }
         }
 
     }

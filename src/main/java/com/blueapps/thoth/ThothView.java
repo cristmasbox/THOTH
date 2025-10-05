@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
-import com.blueapps.maat.BoundCalculation;
 import com.blueapps.maat.BoundProperty;
 import com.blueapps.thoth.cache.CacheStorage;
 
@@ -57,6 +56,8 @@ public class ThothView extends View {
     private int verticalOrientation = BoundProperty.VERTICAL_ORIENTATION_MIDDLE;
     private int writingDirection = BoundProperty.WRITING_DIRECTION_LTR;
     private int writingLayout = BoundProperty.WRITING_LAYOUT_LINES;
+
+    private boolean testAltText = false;
 
     public ThothView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -250,6 +251,51 @@ public class ThothView extends View {
             renderThread = new Thread(renderRunnable);
             renderThread.start();
         }
+    }
+
+    public @ColorInt int getPrimarySignColor(){
+        return primarySignColor;
+    }
+
+    public void setPrimarySignColor(@ColorInt int color){
+        this.primarySignColor = color;
+        this.invalidate();
+    }
+
+    public @ColorInt int getBackgroundColor(){
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(@ColorInt int color){
+        this.backgroundColor = color;
+        this.invalidate();
+    }
+
+    public @ColorInt int getAltTextColor(){
+        return altTextColor;
+    }
+
+    public void setAltTextColor(@ColorInt int color){
+        this.altTextColor = color;
+        this.invalidate();
+    }
+
+    public boolean isAltTextShown(){
+        return showAltText;
+    }
+
+    public void showAltText(boolean b){
+        this.showAltText = b;
+        this.invalidate();
+    }
+
+    public boolean isAltTextTested(){
+        return testAltText;
+    }
+
+    public void testAltText(boolean b){
+        this.testAltText = b;
+        this.invalidate();
     }
 
 }
