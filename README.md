@@ -108,7 +108,7 @@ Now it supports numbers as ids. This means you cant type in
 ```
 instead of typing
 ```
-<v><h><sign id="500"/><sign id="500"/><sign id="500"/></h><h><sign id="500"/><sign id="500"/></h></v>
+<v><h><sign id="V1"/><sign id="V1"/><sign id="V1"/></h><h><sign id="V1"/><sign id="V1"/></h></v>
 ```
 
 ### latest Version
