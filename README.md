@@ -7,7 +7,7 @@ An android library with a custom TextView for displaying Egyptian hieroglyphs by
 ## Disclaimer
 This library uses the `GlyphX` code for encoding Hieroglyphs.
 
-A library for converting GlyphX to MdC and back is planned..
+A library for converting GlyphX to MdC and back is stored here: [GlyphConverter](https://github.com/cristmasbox/GlyphConverter)
 
 > [!TIP]
 > **If you only want to calculate the Dimensions and Positions (`Bounds`) of each sign**, then you can use the `MAAT`-library:\
@@ -27,7 +27,7 @@ dependencyResolutionManagement {
 Then add this dependency to your `build.gradle.kts` file:
 ```
 dependencies {
-  implementation("com.github.cristmasbox:THOTH:1.0.1")
+  implementation("com.github.cristmasbox:THOTH:1.0.0")
 }
 ```
 > [!NOTE]
@@ -108,7 +108,7 @@ Now it supports numbers as ids. This means you cant type in
 ```
 instead of typing
 ```
-<v><h><sign id="500"/><sign id="500"/><sign id="500"/></h><h><sign id="500"/><sign id="500"/></h></v>
+<v><h><sign id="V1"/><sign id="V1"/><sign id="V1"/></h><h><sign id="V1"/><sign id="V1"/></h></v>
 ```
 
 ### latest Version
