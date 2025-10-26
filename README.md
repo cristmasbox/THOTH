@@ -27,7 +27,7 @@ dependencyResolutionManagement {
 Then add this dependency to your `build.gradle.kts` file:
 ```
 dependencies {
-  implementation("com.github.cristmasbox:THOTH:1.0.0")
+  implementation("com.github.cristmasbox:THOTH:1.0.1")
 }
 ```
 > [!NOTE]
