@@ -112,4 +112,4 @@ instead of typing
 ```
 
 ### latest Version
-`06.10.2025@1.0.1`
+`26.10.2025@1.2.1`
