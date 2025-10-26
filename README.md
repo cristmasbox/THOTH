@@ -7,7 +7,7 @@ An android library with a custom TextView for displaying Egyptian hieroglyphs by
 ## Disclaimer
 This library uses the `GlyphX` code for encoding Hieroglyphs.
 
-A library for converting GlyphX to MdC and back is planned.
+A library for converting GlyphX to MdC and back is planned..
 
 > [!TIP]
 > **If you only want to calculate the Dimensions and Positions (`Bounds`) of each sign**, then you can use the `MAAT`-library:\
