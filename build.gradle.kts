@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.maat)
 
     // added libraries
-    implementation("com.opencsv:opencsv:5.12.0")
+    implementation(libs.opencsv)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
