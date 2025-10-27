@@ -5,7 +5,7 @@ An android library with a custom TextView for displaying Egyptian hieroglyphs by
 **You can test the THOTH Library using the [THOTH Example App](https://github.com/cristmasbox/THOTH-Example-App).**
 
 ## Disclaimer
-This library uses the `GlyphX` code for encoding Hieroglyphs.
+This library uses the `GlyphX` and the `MdC` code for encoding Hieroglyphs.
 
 A library for converting GlyphX to MdC and back is stored here: [GlyphConverter](https://github.com/cristmasbox/GlyphConverter)
 
@@ -87,9 +87,11 @@ binding.thothView.setTextSize(200);     // Set the value for the textSize in pix
 
 You can also use some other functions which are explained here:
 
-- `getText()`: Returns the hieroglyphic text as `GlyphX`-String.
+- `getGlyphXText()`: Returns the hieroglyphic text as `GlyphX`-String.
+- `getMdCText()`: Returns the hieroglyphic text as `MdC`-String.
 - `isAltTextTested()`: Returns whether the view is in `AltTextTesting`-Mode or not.
-- `setText(String text)`: Change the hieroglyphic text during runtime by transferring the text as `GlyphX`-String.
+- `setGlyphXText(String glyphX)`: Change the hieroglyphic text during runtime by transferring the text as `GlyphX`-String.
+- `setMdCText(String mdc)`: Change the hieroglyphic text during runtime by transferring the text as `MdC`-String.
 - `testAltText(boolean b)`: Enable or disable `AltTextTesting`-Mode. If `AltTextTesting`-Mode is enabled, the hieroglyph will not be rendered
 and the view will act like if the hieroglyphs are currently loaded into memory. This is useful for testing how the alternative text looks like.
 
