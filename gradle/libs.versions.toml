@@ -32,6 +32,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 material = { module = "com.google.android.material:material", version.ref = "material" }
 maat = { module = "com.github.cristmasbox:MAAT", version.ref = "maat"}
 opencsv = { module = "com.opencsv:opencsv", version.ref = "opencsv" }
+glyphconverter = { module = "com.github.cristmasbox:GlyphConverter", version.ref = "glyphconverter" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
