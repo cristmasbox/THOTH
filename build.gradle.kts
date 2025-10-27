@@ -47,7 +47,7 @@ android {
 dependencies {
 
     // custom libraries
-    implementation("com.github.cristmasbox:MAAT:1.0.0")
+    implementation(libs.maat)
 
     // added libraries
     implementation("com.opencsv:opencsv:5.12.0")
