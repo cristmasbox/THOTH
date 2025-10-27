@@ -111,5 +111,6 @@ instead of typing
 <v><h><sign id="V1"/><sign id="V1"/><sign id="V1"/></h><h><sign id="V1"/><sign id="V1"/></h></v>
 ```
 ### 26.10.2025@1.1.1
+Support for MdC input added using the [GlyphConverter](https://github.com/cristmasbox/GlyphConverter) library.
 ### latest Version
 `26.10.2025@1.2.1`
