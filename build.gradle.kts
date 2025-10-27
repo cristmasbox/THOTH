@@ -48,6 +48,7 @@ dependencies {
 
     // custom libraries
     implementation(libs.maat)
+    implementation(libs.glyphconverter)
 
     // added libraries
     implementation(libs.opencsv)
