@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
+import com.blueapps.glpyhconverter.GlyphConverter;
 import com.blueapps.maat.BoundProperty;
 import com.blueapps.thoth.cache.CacheStorage;
 
@@ -42,10 +43,11 @@ public class ThothView extends View {
     private RenderClass renderClass;
 
     // Paints
-    private Paint textPaint = new Paint();
+    private final Paint textPaint = new Paint();
 
     // Attributes
-    private String text = "<ancientText><v><sign id=\"r\"/><sign id=\"Z1\"/></v><v><sign id=\"n\"/><sign id=\"km\"/></v><sign id=\"m\"/><v><sign id=\"t\"/><sign id=\"O49\"/></v></ancientText>";
+    private String glyphX = "<ancientText><v><sign id=\"r\"/><sign id=\"Z1\"/></v><v><sign id=\"n\"/><sign id=\"km\"/></v><sign id=\"m\"/><v><sign id=\"t\"/><sign id=\"O49\"/></v></ancientText>";
+    private String MdC = "r:Z1-n:km-m-t:O49";
     private String altText = "";//TODO
     private boolean showAltText = true;
     private @ColorInt int altTextColor = Color.BLACK;
@@ -111,7 +113,7 @@ public class ThothView extends View {
 
             renderClass.setParams(this);
             storage.setParams(this.getContext(), renderClass);
-            setText(text);
+            setGlyphXText(glyphX);
 
             renderRunnable = new RenderRunnable(this, renderClass);
             renderThread = new Thread(renderRunnable);
@@ -200,13 +202,27 @@ public class ThothView extends View {
         return storage;
     }
 
-    public String getText(){
-        return text;
+    public String getMdCText(){
+        return MdC;
     }
 
-    public void setText(String text){
-        this.text = text;
-        storage.setGlyphXContent(text);
+    public String getGlyphXText(){
+        return glyphX;
+    }
+
+    public void setMdCText(String mdc){
+        this.MdC = mdc;
+        this.glyphX = GlyphConverter.convertToGlyphX(mdc);
+        storage.setGlyphXContent(glyphX);
+        storage.refreshCache();
+        renderThread = new Thread(renderRunnable);
+        renderThread.start();
+    }
+
+    public void setGlyphXText(String glyphX){
+        this.glyphX = glyphX;
+        this.MdC = GlyphConverter.convertToMdC(glyphX);
+        storage.setGlyphXContent(glyphX);
         storage.refreshCache();
         renderThread = new Thread(renderRunnable);
         renderThread.start();
