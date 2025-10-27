@@ -212,7 +212,12 @@ public class ThothView extends View {
 
     public void setMdCText(String mdc){
         this.MdC = mdc;
-        this.glyphX = GlyphConverter.convertToGlyphX(mdc);
+        try {
+            this.glyphX = GlyphConverter.convertToGlyphX(mdc);
+        } catch (Exception e){
+            this.glyphX = "<ancientText/>";
+            e.printStackTrace();
+        }
         storage.setGlyphXContent(glyphX);
         storage.refreshCache();
         renderThread = new Thread(renderRunnable);
@@ -221,7 +226,12 @@ public class ThothView extends View {
 
     public void setGlyphXText(String glyphX){
         this.glyphX = glyphX;
-        this.MdC = GlyphConverter.convertToMdC(glyphX);
+        try {
+            this.MdC = GlyphConverter.convertToMdC(glyphX);
+        } catch (Exception e){
+            this.MdC = "";
+            e.printStackTrace();
+        }
         storage.setGlyphXContent(glyphX);
         storage.refreshCache();
         renderThread = new Thread(renderRunnable);
