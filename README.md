@@ -113,4 +113,4 @@ instead of typing
 ### 26.10.2025@1.1.1
 Support for MdC input added using the [GlyphConverter](https://github.com/cristmasbox/GlyphConverter) library.
 ### latest Version
-`26.10.2025@1.2.1`
+`26.10.2025@1.1.1`
