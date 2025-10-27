@@ -66,7 +66,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.github.cristmasbox"
                 artifactId = "THOTH"
-                version = "1.0.0"
+                version = "1.1.1"
             }
         }
     }
