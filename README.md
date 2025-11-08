@@ -27,7 +27,7 @@ dependencyResolutionManagement {
 Then add this dependency to your `build.gradle.kts` file:
 ```
 dependencies {
-  implementation("com.github.cristmasbox:THOTH:2.0.0")
+  implementation("com.github.cristmasbox:THOTH:2.0.1")
 }
 ```
 > [!NOTE]
@@ -119,5 +119,7 @@ Support for brackets in MdC added. Now you can type in:
 ```
 N17:i*(p:t)*(t:p)*i:N17
 ```
+### 08.11.2025@2.0.1
+Updated dependencies.
 ### latest Version
-`08.11.2025@2.0.0`
+`08.11.2025@2.0.1`
