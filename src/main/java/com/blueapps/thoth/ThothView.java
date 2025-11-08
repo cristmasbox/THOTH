@@ -214,28 +214,26 @@ public class ThothView extends View {
         this.MdC = mdc;
         try {
             this.glyphX = GlyphConverter.convertToGlyphX(mdc);
+            storage.setGlyphXContent(glyphX);
+            storage.refreshCache();
+            renderThread = new Thread(renderRunnable);
+            renderThread.start();
         } catch (Exception e){
-            this.glyphX = "<ancientText/>";
             e.printStackTrace();
         }
-        storage.setGlyphXContent(glyphX);
-        storage.refreshCache();
-        renderThread = new Thread(renderRunnable);
-        renderThread.start();
     }
 
     public void setGlyphXText(String glyphX){
         this.glyphX = glyphX;
         try {
             this.MdC = GlyphConverter.convertToMdC(glyphX);
+            storage.setGlyphXContent(glyphX);
+            storage.refreshCache();
+            renderThread = new Thread(renderRunnable);
+            renderThread.start();
         } catch (Exception e){
-            this.MdC = "";
             e.printStackTrace();
         }
-        storage.setGlyphXContent(glyphX);
-        storage.refreshCache();
-        renderThread = new Thread(renderRunnable);
-        renderThread.start();
     }
 
     public int getTextSize() {
