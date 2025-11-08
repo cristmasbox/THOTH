@@ -120,6 +120,6 @@ Support for brackets in MdC added. Now you can type in:
 N17:i*(p:t)*(t:p)*i:N17
 ```
 ### 08.11.2025@2.0.1
-Updated dependencies
+Updated dependencies.
 ### latest Version
 `08.11.2025@2.0.1`
