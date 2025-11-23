@@ -77,7 +77,7 @@ public class RenderClass extends ViewModel {
         return storage.getBoundCalculation().getBounds(dimensions, property);
     }
 
-    private static Document convertToXmlDocument(String xml) throws ParserConfigurationException, IOException, SAXException {
+    public static Document convertToXmlDocument(String xml) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         return builder.parse(new InputSource(new StringReader(xml)));
