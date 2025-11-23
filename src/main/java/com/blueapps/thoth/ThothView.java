@@ -1,7 +1,6 @@
 package com.blueapps.thoth;
 
 import static com.blueapps.thoth.RenderClass.convertToXmlDocument;
-import static com.blueapps.thoth.RenderClass.convertToXmlString;
 
 import android.content.Context;
 import android.content.res.TypedArray;
