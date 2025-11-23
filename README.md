@@ -123,11 +123,14 @@ N17:i*(p:t)*(t:p)*i:N17
 ### 08.11.2025@2.0.1
 Updated dependencies.
 ### 23.11.2025@2.0.2
-Function for directly passing GlyphX XML document to ThothView.java added.
-Now you can use:
-```
-setGlyphXText(myXMLDocument);
-```
-Support for SDK `23` added.
+- Function for directly passing GlyphX XML document to ThothView.java added. Also `getGlyphXText()` now returns a `org.w3c.dom.Document`.
+  Now you can use:
+  ```
+  setGlyphXText(myXMLDocument);
+
+  String content = getGlyphXTextString();
+  Document content = getGlyphXText();
+  ```
+- Support for SDK `23` added.
 ### latest Version
 `23.11.2025@2.0.2`
