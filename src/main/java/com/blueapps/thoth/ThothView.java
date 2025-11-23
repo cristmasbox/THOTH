@@ -1,5 +1,8 @@
 package com.blueapps.thoth;
 
+import static com.blueapps.thoth.RenderClass.convertToXmlDocument;
+import static com.blueapps.thoth.RenderClass.convertToXmlString;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -19,6 +22,13 @@ import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 import com.blueapps.glpyhconverter.GlyphConverter;
 import com.blueapps.maat.BoundProperty;
 import com.blueapps.thoth.cache.CacheStorage;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class ThothView extends View {
 
@@ -46,7 +56,7 @@ public class ThothView extends View {
     private final Paint textPaint = new Paint();
 
     // Attributes
-    private String glyphX = "<ancientText><v><sign id=\"r\"/><sign id=\"Z1\"/></v><v><sign id=\"n\"/><sign id=\"km\"/></v><sign id=\"m\"/><v><sign id=\"t\"/><sign id=\"O49\"/></v></ancientText>";
+    private Document glyphX;
     private String MdC = "r:Z1-n:km-m-t:O49";
     private String altText = "";//TODO
     private boolean showAltText = true;
@@ -94,6 +104,17 @@ public class ThothView extends View {
         verticalOrientation = a.getInteger(R.styleable.ThothView_verticalOrientation, 1);
         //writingDirection = a.getInteger(R.styleable.ThothView_writingDirection, 0);
         writingLayout = a.getInteger(R.styleable.ThothView_writingLayout, 0);
+
+        // Create standard document
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.newDocument();
+            Element rootElement = doc.createElement("ancientText");
+            doc.appendChild(rootElement);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
 
         a.recycle();
     }
@@ -206,15 +227,15 @@ public class ThothView extends View {
         return MdC;
     }
 
-    public String getGlyphXText(){
+    public Document getGlyphXText(){
         return glyphX;
     }
 
     public void setMdCText(String mdc){
         this.MdC = mdc;
         try {
-            this.glyphX = GlyphConverter.convertToGlyphX(mdc);
-            storage.setGlyphXContent(glyphX);
+            this.glyphX = GlyphConverter.convertToGlyphXDocument(mdc);
+            storage.setGlyphXDocument(glyphX);
             storage.refreshCache();
             renderThread = new Thread(renderRunnable);
             renderThread.start();
@@ -224,10 +245,23 @@ public class ThothView extends View {
     }
 
     public void setGlyphXText(String glyphX){
-        this.glyphX = glyphX;
         try {
+            this.glyphX = convertToXmlDocument(glyphX);
             this.MdC = GlyphConverter.convertToMdC(glyphX);
             storage.setGlyphXContent(glyphX);
+            storage.refreshCache();
+            renderThread = new Thread(renderRunnable);
+            renderThread.start();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setGlyphXText(Document glyphXDocument){
+        this.glyphX = glyphXDocument;
+        try {
+            this.MdC = GlyphConverter.convertToMdC(glyphX);
+            storage.setGlyphXDocument(glyphXDocument);
             storage.refreshCache();
             renderThread = new Thread(renderRunnable);
             renderThread.start();

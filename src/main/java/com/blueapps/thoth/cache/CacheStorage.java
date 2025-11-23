@@ -1,5 +1,7 @@
 package com.blueapps.thoth.cache;
 
+import static com.blueapps.thoth.RenderClass.convertToXmlString;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Rect;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 public class CacheStorage extends ViewModel {
 
@@ -134,5 +137,14 @@ public class CacheStorage extends ViewModel {
     public void clearLayoutCache(){
         this.boundCalculation = null;
         this.bounds = null;
+    }
+
+    public void setGlyphXDocument(Document glyphXDocument) {
+        GlyphXDocument = glyphXDocument;
+        try {
+            GlyphXContent = convertToXmlString(glyphXDocument);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
     }
 }
