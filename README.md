@@ -27,7 +27,7 @@ dependencyResolutionManagement {
 Then add this dependency to your `build.gradle.kts` file:
 ```
 dependencies {
-  implementation("com.github.cristmasbox:THOTH:2.0.1")
+  implementation("com.github.cristmasbox:THOTH:2.0.2")
 }
 ```
 > [!NOTE]
@@ -91,6 +91,7 @@ You can also use some other functions which are explained here:
 - `getMdCText()`: Returns the hieroglyphic text as `MdC`-String.
 - `isAltTextTested()`: Returns whether the view is in `AltTextTesting`-Mode or not.
 - `setGlyphXText(String glyphX)`: Change the hieroglyphic text during runtime by transferring the text as `GlyphX`-String.
+- `setGlyphXText(org.w3c.dom.Document glyphX)`: Change the hieroglyphic text during runtime by transferring the text as `GlyphX`-XML-Document.
 - `setMdCText(String mdc)`: Change the hieroglyphic text during runtime by transferring the text as `MdC`-String.
 - `testAltText(boolean b)`: Enable or disable `AltTextTesting`-Mode. If `AltTextTesting`-Mode is enabled, the hieroglyph will not be rendered
 and the view will act like if the hieroglyphs are currently loaded into memory. This is useful for testing how the alternative text looks like.
@@ -121,5 +122,12 @@ N17:i*(p:t)*(t:p)*i:N17
 ```
 ### 08.11.2025@2.0.1
 Updated dependencies.
+### 23.11.2025@2.0.2
+Function for directly passing GlyphX XML document to ThothView.java added.
+Now you can use:
+```
+setGlyphXText(myXMLDocument);
+```
+Support for API `23` added.
 ### latest Version
-`08.11.2025@2.0.1`
+`23.11.2025@2.0.2`
