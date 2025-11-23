@@ -1,6 +1,7 @@
 package com.blueapps.thoth;
 
 import static com.blueapps.thoth.RenderClass.convertToXmlDocument;
+import static com.blueapps.thoth.RenderClass.convertToXmlString;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -28,6 +29,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 public class ThothView extends View {
 
@@ -228,6 +230,15 @@ public class ThothView extends View {
 
     public Document getGlyphXText(){
         return glyphX;
+    }
+
+    public String getGlyphXTextString(){
+        try {
+            return convertToXmlString(glyphX);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public void setMdCText(String mdc){
