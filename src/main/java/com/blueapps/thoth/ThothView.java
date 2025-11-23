@@ -110,9 +110,9 @@ public class ThothView extends View {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.newDocument();
-            Element rootElement = doc.createElement("ancientText");
-            doc.appendChild(rootElement);
+            glyphX = docBuilder.newDocument();
+            Element rootElement = glyphX.createElement("ancientText");
+            glyphX.appendChild(rootElement);
         } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
         }
@@ -268,8 +268,8 @@ public class ThothView extends View {
     }
 
     public void setGlyphXText(Document glyphXDocument){
-        this.glyphX = glyphXDocument;
         try {
+            this.glyphX = glyphXDocument;
             this.MdC = GlyphConverter.convertToMdC(glyphX);
             storage.setGlyphXDocument(glyphXDocument);
             storage.refreshCache();
