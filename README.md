@@ -128,6 +128,6 @@ Now you can use:
 ```
 setGlyphXText(myXMLDocument);
 ```
-Support for API `23` added.
+Support for SDK `23` added.
 ### latest Version
 `23.11.2025@2.0.2`
