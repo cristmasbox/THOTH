@@ -91,16 +91,24 @@ public class RenderClass extends ViewModel {
     }
 
     public static String convertToXmlString(Document xml) throws TransformerException {
-        StringWriter sw = new StringWriter();
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = tf.newTransformer();
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
 
-        transformer.transform(new DOMSource(xml), new StreamResult(sw));
-        return sw.toString();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, "no");
+
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+
+            DOMSource source = new DOMSource(xml);
+            transformer.transform(source, result);
+
+            return writer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private ArrayList<ValuePair<Float, Float>> getDimensions(ArrayList<String> ids) {

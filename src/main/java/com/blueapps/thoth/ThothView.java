@@ -26,6 +26,8 @@ import com.blueapps.thoth.cache.CacheStorage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -107,15 +109,7 @@ public class ThothView extends View {
         writingLayout = a.getInteger(R.styleable.ThothView_writingLayout, 0);
 
         // Create standard document
-        try {
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            glyphX = docBuilder.newDocument();
-            Element rootElement = glyphX.createElement("ancientText");
-            glyphX.appendChild(rootElement);
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        }
+        glyphX = GlyphConverter.convertToGlyphXDocument(MdC);
 
         a.recycle();
     }
