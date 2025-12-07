@@ -166,7 +166,7 @@ public class ThothView extends View {
             }
         } else {
             if (showAltText) {
-                canvas.drawText(altText, 0, altTextSize + (height - altTextSize) / 2, textPaint);
+                canvas.drawText(altText, 0, altTextSize + (float) (height - altTextSize) / 2, textPaint);
             }
         }
     }
