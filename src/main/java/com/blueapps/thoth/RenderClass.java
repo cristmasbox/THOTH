@@ -3,6 +3,7 @@ package com.blueapps.thoth;
 import static com.blueapps.thoth.ThothView.FILENAME_DRAWABLE_IDS;
 import static com.blueapps.thoth.ThothView.FILENAME_DRAWABLE_PATHS;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.graphics.Rect;
@@ -50,6 +51,7 @@ public class RenderClass extends ViewModel {
     // Constants
     private static final String TAG = "RenderClass";
 
+    @SuppressLint("StaticFieldLeak")
     private ThothView thothView;
     private CacheStorage storage;
 
@@ -69,7 +71,8 @@ public class RenderClass extends ViewModel {
     }
 
     public ArrayList<String> renderIds(){
-        return storage.getBoundCalculation().getIds();
+        return storage.getBoundCalculation().getIds(thothView.getWritingLayout() == BoundProperty.WRITING_LAYOUT_LINES,
+                                                    thothView.getWritingDirection() == BoundProperty.WRITING_DIRECTION_RTL);
     }
 
     public ArrayList<ValuePair<Float, Float>> renderDimensions(){
@@ -78,7 +81,9 @@ public class RenderClass extends ViewModel {
 
     public ArrayList<Rect> renderBounds(){
         BoundProperty property = new BoundProperty(0, 0, thothView.getTextSize(),
-                thothView.getVerticalOrientation(), thothView.getWritingDirection(), thothView.getWritingLayout());
+                thothView.getVerticalOrientation(), thothView.getWritingDirection(), thothView.getWritingLayout(),
+                thothView.isDrawLines(), thothView.getLineThickness(), thothView.getPagePaddingLeft(), thothView.getPagePaddingTop(), thothView.getPagePaddingRight(),
+                thothView.getPagePaddingBottom(), thothView.getSignPadding(), thothView.getLayoutSignPadding(), thothView.getInterLinePadding());
         ArrayList<ValuePair<Float, Float>> dimensions = storage.getDimensions();
 
         return storage.getBoundCalculation().getBounds(dimensions, property);

@@ -27,7 +27,7 @@ dependencyResolutionManagement {
 Then add this dependency to your `build.gradle.kts` file:
 ```
 dependencies {
-  implementation("com.github.cristmasbox:THOTH:2.0.2")
+  implementation("com.github.cristmasbox:THOTH:2.0.3")
 }
 ```
 > [!NOTE]
@@ -53,6 +53,7 @@ Put this code into your `layout.xml`:
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textSize="40sp"
+    android:text="r:Z1-n:km-m-t:O49"
     app:backgroundColor="#fff"
     app:primarySignColor="#000"
     app:altTextColor="#000"
@@ -65,6 +66,7 @@ Put this code into your `layout.xml`:
 Here I will explain all the possible xml Attributes:
 
 - `android:textSize`: Height of one line of big hieroglyphs. *Default: `200px`*
+- `android:text`: Hieroglyphic text to display. Encoded with `MdC`.
 - `app:verticalOrientation`: This parameter can only have three values and defines the vertical position of smaller signs (like `n`): *Default: `middle`*
   - `top`: Put signs to the top of the line  *In the code this equals `0`*
   - `middle`: Center signs vertically        *In the code this equals `1`*
@@ -90,11 +92,33 @@ You can also use some other functions which are explained here:
 - `getGlyphXText()`: Returns the hieroglyphic text as `GlyphX`-String.
 - `getMdCText()`: Returns the hieroglyphic text as `MdC`-String.
 - `isAltTextTested()`: Returns whether the view is in `AltTextTesting`-Mode or not.
+- `getLineThickness()`: Returns the thickness of the lines drawn between the columns / lines of the text in pixels
+- `isDrawLines()`: Returns whether there should be lines drawn between the columns / lines of the text
+- `getPagePaddingLeft()`: Returns the left padding of the text as a whole
+- `getPagePaddingTop()`: Returns the top padding of the text as a whole
+- `getPagePaddingRight()`: Returns the right padding of the text as a whole
+- `getPagePaddingBottom()`: Returns the bottom padding of the text as a whole
+- `getSignPadding()`: Returns the padding between signs outside of groups
+- `getLayoutSignPadding()`: Returns the padding between signs inside a group
+- `getInterLinePadding()`: Returns the padding between the lines / columns of the text
+
 - `setGlyphXText(String glyphX)`: Change the hieroglyphic text during runtime by transferring the text as `GlyphX`-String.
 - `setGlyphXText(org.w3c.dom.Document glyphX)`: Change the hieroglyphic text during runtime by transferring the text as `GlyphX`-XML-Document.
 - `setMdCText(String mdc)`: Change the hieroglyphic text during runtime by transferring the text as `MdC`-String.
 - `testAltText(boolean b)`: Enable or disable `AltTextTesting`-Mode. If `AltTextTesting`-Mode is enabled, the hieroglyph will not be rendered
 and the view will act like if the hieroglyphs are currently loaded into memory. This is useful for testing how the alternative text looks like.
+- `setLineThickness(float lineThickness)`: Sets the thickness of the lines drawn between the columns / lines of the text in pixels
+- `setDrawLines(boolean drawLines)`: Determines if there should be drawn lines between the columns / lines of the text
+- `setPagePaddingLeft(float pagePaddingLeft)`: Sets the left padding of the text as a whole
+- `setPagePaddingTop(float pagePaddingTop)`: Sets the top padding of the text as a whole
+- `setPagePaddingRight(float pagePaddingRight)`: Sets the right padding of the text as a whole
+- `setPagePaddingBottom(float pagePaddingBottom)`: Sets the bottom padding of the text as a whole
+- `setSignPadding(float signPadding)`: Sets the padding between signs outside of groups
+- `setLayoutSignPadding(float layoutSignPadding)`: Sets the padding between signs inside a group
+- `setInterLinePadding(float interLinePadding)`: Sets the padding between the lines / columns of the text
+
+> [!NOTE]
+> Currently the lines between the columns / lines of the texts are not drawn
 
 > [!NOTE]
 > Currently the view isn't displaying the alternative text correctly.\
@@ -132,5 +156,11 @@ Updated dependencies.
   Document content = getGlyphXText();
   ```
 - Support for SDK `23` added.
+### 11.12.2025@2.0.3
+- Issue with multiple render requests solved *(e.g. if you are changing the text two times shortly after each other)*
+- Support for `maat:1.5.1` added:
+    - adding Paddings between lines, signs, in groups or around the text as a whole is possible now
+    - `RTL`-layout is supported and the signs are mirrored
+    - multiline texts are possible with the `!` and `!!` sign in `MdC` and with `<br/>` and `<pbr/>` in `glyphX`
 ### latest Version
-`23.11.2025@2.0.2`
+`11.12.2025@2.0.3`

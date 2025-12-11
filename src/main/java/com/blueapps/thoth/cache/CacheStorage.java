@@ -137,6 +137,14 @@ public class CacheStorage extends ViewModel {
     public void clearLayoutCache(){
         this.boundCalculation = null;
         this.bounds = null;
+        this.dimensions = null;
+    }
+
+    public void clearDirectionCache(){
+        this.boundCalculation = null;
+        this.bounds = null;
+        this.ids = null;
+        this.dimensions = null;
     }
 
     public void setGlyphXDocument(Document glyphXDocument) {

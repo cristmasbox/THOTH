@@ -1,5 +1,6 @@
 package com.blueapps.thoth;
 
+import static com.blueapps.maat.BoundProperty.WRITING_DIRECTION_RTL;
 import static com.blueapps.thoth.RenderClass.convertToXmlDocument;
 import static com.blueapps.thoth.RenderClass.convertToXmlString;
 
@@ -8,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.util.AttributeSet;
@@ -20,17 +22,12 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
 import com.blueapps.glpyhconverter.GlyphConverter;
+import com.blueapps.glpyhconverter.toglyphx.exceptions.MdCParseException;
 import com.blueapps.maat.BoundProperty;
 import com.blueapps.thoth.cache.CacheStorage;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 public class ThothView extends View {
@@ -49,8 +46,8 @@ public class ThothView extends View {
 
     protected boolean unlockDrawing = false;
 
-    private Thread renderThread = new Thread();
     private RenderRunnable renderRunnable;
+    private TaskScheduler taskScheduler;
 
     private CacheStorage storage;
     private RenderClass renderClass;
@@ -71,6 +68,15 @@ public class ThothView extends View {
     private int verticalOrientation = BoundProperty.VERTICAL_ORIENTATION_MIDDLE;
     private int writingDirection = BoundProperty.WRITING_DIRECTION_LTR;
     private int writingLayout = BoundProperty.WRITING_LAYOUT_LINES;
+    private boolean drawLines = false;
+    private float lineThickness = 2f;
+    private float pagePaddingLeft = 0f;
+    private float pagePaddingTop = 0f;
+    private float pagePaddingRight = 0f;
+    private float pagePaddingBottom = 0f;
+    private float signPadding = 0f;
+    private float layoutSignPadding = 0f;
+    private float interLinePadding = 25f;
 
     private boolean testAltText = false;
 
@@ -97,6 +103,16 @@ public class ThothView extends View {
     }
 
     private void setAttrs(TypedArray a){
+        try {
+            String tempMdc = a.getString(R.styleable.ThothView_android_text);
+            if (tempMdc != null) {
+                this.glyphX = GlyphConverter.convertToGlyphXDocument(tempMdc);
+                MdC = tempMdc;
+            }
+        } catch (MdCParseException e){
+            e.printStackTrace();
+        }
+
         altText = a.getString(R.styleable.ThothView_altText);
         altTextSize = a.getDimensionPixelSize(R.styleable.ThothView_altTextSize, height / 2);
         showAltText = a.getBoolean(R.styleable.ThothView_showAltText, true);
@@ -105,7 +121,7 @@ public class ThothView extends View {
         primarySignColor = a.getColor(R.styleable.ThothView_primarySignColor, Color.BLACK);
         textSize = a.getDimensionPixelSize(R.styleable.ThothView_android_textSize, 200);
         verticalOrientation = a.getInteger(R.styleable.ThothView_verticalOrientation, 1);
-        //writingDirection = a.getInteger(R.styleable.ThothView_writingDirection, 0);
+        writingDirection = a.getInteger(R.styleable.ThothView_writingDirection, 0);
         writingLayout = a.getInteger(R.styleable.ThothView_writingLayout, 0);
 
         // Create standard document
@@ -131,9 +147,9 @@ public class ThothView extends View {
             storage.setParams(this.getContext(), renderClass);
             setGlyphXText(glyphX);
 
-            renderRunnable = new RenderRunnable(this, renderClass);
-            renderThread = new Thread(renderRunnable);
-            renderThread.start();
+            taskScheduler = new TaskScheduler();
+            renderRunnable = new RenderRunnable(this, renderClass, taskScheduler);
+            render();
 
             textPaint.setTextSize(altTextSize);
             textPaint.setColor(altTextColor);
@@ -154,13 +170,22 @@ public class ThothView extends View {
             int counter = 0;
             for (String id : storage.getIds()) {
                 Drawable drawable = storage.getDrawable(id);
-                drawable.setBounds(storage.getBounds().get(counter));
+                Rect bound = storage.getBounds().get(counter);
+                drawable.setBounds(bound);
+                if (writingDirection == WRITING_DIRECTION_RTL){
+                    canvas.save();
+                    // Flip canvas
+                    canvas.scale(-1f, 1f, bound.centerX(), bound.centerY());
+                }
                 if (drawable instanceof VectorDrawable){
                     VectorDrawable drawable1 = (VectorDrawable) drawable;
                     drawable1.setTint(primarySignColor);
                     drawable1.draw(canvas);
                 } else {
                     drawable.draw(canvas);
+                }
+                if (writingDirection == WRITING_DIRECTION_RTL){
+                    canvas.restore();
                 }
                 counter++;
             }
@@ -174,11 +199,8 @@ public class ThothView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        if (writingLayout == 0) {
-            height = textSize;
-        } else {
-            width = textSize;
-        }
+        height = (int) storage.getBoundCalculation().getHeight();
+        width = (int) storage.getBoundCalculation().getWidth();
 
         if (!unlockDrawing && showAltText){
             width = (int) textPaint.measureText(altText);
@@ -241,8 +263,7 @@ public class ThothView extends View {
             this.glyphX = GlyphConverter.convertToGlyphXDocument(mdc);
             storage.setGlyphXDocument(glyphX);
             storage.refreshCache();
-            renderThread = new Thread(renderRunnable);
-            renderThread.start();
+            render();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -254,8 +275,7 @@ public class ThothView extends View {
             this.MdC = GlyphConverter.convertToMdC(glyphX);
             storage.setGlyphXContent(glyphX);
             storage.refreshCache();
-            renderThread = new Thread(renderRunnable);
-            renderThread.start();
+            render();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -267,8 +287,7 @@ public class ThothView extends View {
             this.MdC = GlyphConverter.convertToMdC(glyphX);
             storage.setGlyphXDocument(glyphXDocument);
             storage.refreshCache();
-            renderThread = new Thread(renderRunnable);
-            renderThread.start();
+            render();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -281,8 +300,7 @@ public class ThothView extends View {
     public void setTextSize(int textSize){
         this.textSize = textSize;
         storage.clearLayoutCache();
-        renderThread = new Thread(renderRunnable);
-        renderThread.start();
+        render();
     }
 
     public int getVerticalOrientation(){
@@ -293,13 +311,20 @@ public class ThothView extends View {
         if (verticalOrientation < 3 && verticalOrientation > -1) {
             this.verticalOrientation = verticalOrientation;
             storage.clearLayoutCache();
-            renderThread = new Thread(renderRunnable);
-            renderThread.start();
+            render();
         }
     }
 
     public int getWritingDirection(){
         return writingDirection;
+    }
+
+    public void setWritingDirection(int writingDirection){
+        if (writingDirection == 0 || writingDirection == 1){
+            this.writingDirection = writingDirection;
+            storage.clearDirectionCache();
+            render();
+        }
     }
 
     public int getWritingLayout(){
@@ -310,8 +335,7 @@ public class ThothView extends View {
         if (writingLayout == 0 || writingLayout == 1){
             this.writingLayout = writingLayout;
             storage.clearLayoutCache();
-            renderThread = new Thread(renderRunnable);
-            renderThread.start();
+            render();
         }
     }
 
@@ -360,8 +384,7 @@ public class ThothView extends View {
     public void testAltText(boolean b){
         this.testAltText = b;
         storage.clearLayoutCache();
-        renderThread = new Thread(renderRunnable);
-        renderThread.start();
+        render();
         unlockDrawing = false;
         this.requestLayout();
         this.invalidate();
@@ -388,4 +411,100 @@ public class ThothView extends View {
         this.invalidate();
     }
 
+    public float getLineThickness() {
+        return lineThickness;
+    }
+
+    public void setLineThickness(float lineThickness) {
+        this.lineThickness = lineThickness;
+        if (isDrawLines()) {
+            storage.clearLayoutCache();
+            render();
+        }
+    }
+
+    public boolean isDrawLines() {
+        return drawLines;
+    }
+
+    public void setDrawLines(boolean drawLines) {
+        this.drawLines = drawLines;
+        storage.clearLayoutCache();
+        render();
+    }
+
+    public float getPagePaddingLeft() {
+        return pagePaddingLeft;
+    }
+
+    public void setPagePaddingLeft(float pagePaddingLeft) {
+        this.pagePaddingLeft = pagePaddingLeft;
+        storage.clearLayoutCache();
+        render();
+    }
+
+    public float getPagePaddingTop() {
+        return pagePaddingTop;
+    }
+
+    public void setPagePaddingTop(float pagePaddingTop) {
+        this.pagePaddingTop = pagePaddingTop;
+        storage.clearLayoutCache();
+        render();
+    }
+
+    public float getPagePaddingRight() {
+        return pagePaddingRight;
+    }
+
+    public void setPagePaddingRight(float pagePaddingRight) {
+        this.pagePaddingRight = pagePaddingRight;
+        storage.clearLayoutCache();
+        render();
+    }
+
+    public float getPagePaddingBottom() {
+        return pagePaddingBottom;
+    }
+
+    public void setPagePaddingBottom(float pagePaddingBottom) {
+        this.pagePaddingBottom = pagePaddingBottom;
+        storage.clearLayoutCache();
+        render();
+    }
+
+    public float getSignPadding() {
+        return signPadding;
+    }
+
+    public void setSignPadding(float signPadding) {
+        this.signPadding = signPadding;
+        storage.clearLayoutCache();
+        render();
+    }
+
+    public float getLayoutSignPadding() {
+        return layoutSignPadding;
+    }
+
+    public void setLayoutSignPadding(float layoutSignPadding) {
+        this.layoutSignPadding = layoutSignPadding;
+        storage.clearLayoutCache();
+        render();
+    }
+
+    public float getInterLinePadding() {
+        return interLinePadding;
+    }
+
+    public void setInterLinePadding(float interLinePadding) {
+        this.interLinePadding = interLinePadding;
+        storage.clearLayoutCache();
+        render();
+    }
+
+
+    private void render(){
+        taskScheduler.addTask(renderRunnable);
+    }
 }

@@ -12,14 +12,15 @@ activityCompose = "1.12.1"
 composeBom = "2025.12.00"
 constraintlayout = "2.2.1"
 material = "1.13.0"
-maat = "1.0.0"
 opencsv = "5.12.0"
 maat = "1.5.1"
 thoth = "2.0.2"
 
 [libraries]
+android-keyboardlistener = { module = "com.github.ravindu1024:android-keyboardlistener", version.ref = "androidKeyboardlistener" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+glyphconverter = { module = "com.github.cristmasbox:GlyphConverter", version.ref = "glyphconverter" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -34,9 +35,9 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
-maat = { module = "com.github.cristmasbox:MAAT", version.ref = "maat"}
 opencsv = { module = "com.opencsv:opencsv", version.ref = "opencsv" }
-glyphconverter = { module = "com.github.cristmasbox:GlyphConverter", version.ref = "glyphconverter" }
+maat = { module = "com.github.cristmasbox:MAAT", version.ref = "maat"}
+thoth = { module = "com.github.cristmasbox:THOTH", version.ref = "thoth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -16,11 +16,13 @@ public class RenderRunnable implements Runnable {
     private ThothView thothView;
     private CacheStorage storage;
     private RenderClass renderClass;
+    private RunnableListener listener;
 
-    public RenderRunnable(ThothView thothView, RenderClass renderClass) {
+    public RenderRunnable(ThothView thothView, RenderClass renderClass, RunnableListener listener) {
         this.thothView = thothView;
         this.storage = thothView.getStorage();
         this.renderClass = renderClass;
+        this.listener = listener;
     }
 
     @Override
@@ -32,8 +34,8 @@ public class RenderRunnable implements Runnable {
 
                 storage.getBounds();
 
-                thothView.width = (int) storage.getBoundCalculation().getXCursor();
-                thothView.height = (int) storage.getBoundCalculation().getYCursor();
+                thothView.width = (int) storage.getBoundCalculation().getWidth();
+                thothView.height = (int) storage.getBoundCalculation().getHeight();
 
                 thothView.unlockDrawing = true;
 
@@ -46,6 +48,8 @@ public class RenderRunnable implements Runnable {
                 e.printStackTrace();
             }
         }
+
+        listener.onFinish();
 
     }
 }
