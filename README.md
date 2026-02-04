@@ -4,6 +4,8 @@
 An android library with a custom TextView for displaying Egyptian hieroglyphs by using the `GlyphX` code.\
 **You can test the THOTH Library using the [THOTH Example App](https://github.com/cristmasbox/THOTH-Example-App).**
 
+*This library is part of the [Egyptian Writer](https://github.com/cristmasbox/Egyptian_Writer) Android App.*
+
 ## Disclaimer
 This library uses the `GlyphX` and the `MdC` code for encoding Hieroglyphs.
 
