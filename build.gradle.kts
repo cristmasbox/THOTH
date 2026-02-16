@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library") version "8.13.1"
+    id("com.android.library") version "9.0.1"
     id("maven-publish")
 }
 
@@ -49,6 +49,7 @@ dependencies {
     // custom libraries
     implementation(libs.maat)
     implementation(libs.glyphconverter)
+    implementation(libs.signprovider)
 
     // added libraries
     implementation(libs.opencsv)
@@ -67,7 +68,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.github.cristmasbox"
                 artifactId = "THOTH"
-                version = "2.0.3"
+                version = "2.0.4"
             }
         }
     }
