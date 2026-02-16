@@ -13,11 +13,13 @@ import androidx.lifecycle.ViewModel;
 
 import com.blueapps.maat.BoundCalculation;
 import com.blueapps.maat.ValuePair;
+import com.blueapps.signprovider.SignProvider;
 import com.blueapps.thoth.R;
 import com.blueapps.thoth.RenderClass;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -96,11 +98,12 @@ public class CacheStorage extends ViewModel {
         Drawable drawable = drawables.get(id);
         if (drawable == null){
             try {
-                drawable = renderClass.getSignDrawable(id);
+                SignProvider signProvider = new SignProvider(context);
+                drawable = signProvider.getSign(id);
                 drawables.put(id, drawable);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException | XmlPullParserException e) {
                 drawables.put(id, ContextCompat.getDrawable(context, R.drawable.not_found_sign));
+                e.printStackTrace();
             }
         }
         return drawable;
