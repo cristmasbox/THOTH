@@ -299,7 +299,7 @@ public class ThothView extends View {
 
     public void setTextSize(int textSize){
         this.textSize = textSize;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
@@ -310,7 +310,7 @@ public class ThothView extends View {
     public void setVerticalOrientation(int verticalOrientation){
         if (verticalOrientation < 3 && verticalOrientation > -1) {
             this.verticalOrientation = verticalOrientation;
-            storage.clearLayoutCache();
+            if(storage != null) storage.clearLayoutCache();
             render();
         }
     }
@@ -322,7 +322,7 @@ public class ThothView extends View {
     public void setWritingDirection(int writingDirection){
         if (writingDirection == 0 || writingDirection == 1){
             this.writingDirection = writingDirection;
-            storage.clearDirectionCache();
+            if(storage != null) storage.clearDirectionCache();
             render();
         }
     }
@@ -334,7 +334,7 @@ public class ThothView extends View {
     public void setWritingLayout(int writingLayout){
         if (writingLayout == 0 || writingLayout == 1){
             this.writingLayout = writingLayout;
-            storage.clearLayoutCache();
+            if(storage != null) storage.clearLayoutCache();
             render();
         }
     }
@@ -383,7 +383,7 @@ public class ThothView extends View {
 
     public void testAltText(boolean b){
         this.testAltText = b;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
         unlockDrawing = false;
         this.requestLayout();
@@ -418,7 +418,7 @@ public class ThothView extends View {
     public void setLineThickness(float lineThickness) {
         this.lineThickness = lineThickness;
         if (isDrawLines()) {
-            storage.clearLayoutCache();
+            if(storage != null) storage.clearLayoutCache();
             render();
         }
     }
@@ -429,7 +429,7 @@ public class ThothView extends View {
 
     public void setDrawLines(boolean drawLines) {
         this.drawLines = drawLines;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
@@ -439,7 +439,7 @@ public class ThothView extends View {
 
     public void setPagePaddingLeft(float pagePaddingLeft) {
         this.pagePaddingLeft = pagePaddingLeft;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
@@ -449,7 +449,7 @@ public class ThothView extends View {
 
     public void setPagePaddingTop(float pagePaddingTop) {
         this.pagePaddingTop = pagePaddingTop;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
@@ -459,7 +459,7 @@ public class ThothView extends View {
 
     public void setPagePaddingRight(float pagePaddingRight) {
         this.pagePaddingRight = pagePaddingRight;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
@@ -469,7 +469,7 @@ public class ThothView extends View {
 
     public void setPagePaddingBottom(float pagePaddingBottom) {
         this.pagePaddingBottom = pagePaddingBottom;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
@@ -479,7 +479,7 @@ public class ThothView extends View {
 
     public void setSignPadding(float signPadding) {
         this.signPadding = signPadding;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
@@ -489,7 +489,7 @@ public class ThothView extends View {
 
     public void setLayoutSignPadding(float layoutSignPadding) {
         this.layoutSignPadding = layoutSignPadding;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
@@ -499,12 +499,12 @@ public class ThothView extends View {
 
     public void setInterLinePadding(float interLinePadding) {
         this.interLinePadding = interLinePadding;
-        storage.clearLayoutCache();
+        if(storage != null) storage.clearLayoutCache();
         render();
     }
 
 
     private void render(){
-        taskScheduler.addTask(renderRunnable);
+        if (taskScheduler != null) taskScheduler.addTask(renderRunnable);
     }
 }
