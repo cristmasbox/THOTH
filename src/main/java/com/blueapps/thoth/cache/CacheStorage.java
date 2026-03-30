@@ -16,6 +16,7 @@ import com.blueapps.maat.ValuePair;
 import com.blueapps.signprovider.SignProvider;
 import com.blueapps.thoth.R;
 import com.blueapps.thoth.RenderClass;
+import com.blueapps.thoth.ThothListener;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -32,6 +33,9 @@ public class CacheStorage extends ViewModel {
     private RenderClass renderClass;
     private Context context;
 
+    private int signCounter = 1;
+    private ThothListener listener;
+
     // Cached Values
     private String GlyphXContent = "";
     private Document GlyphXDocument;
@@ -42,9 +46,10 @@ public class CacheStorage extends ViewModel {
     private ArrayList<Rect> bounds;
 
 
-    public void setParams(Context context, RenderClass renderClass){
+    public void setParams(Context context, RenderClass renderClass, ThothListener listener){
         this.renderClass = renderClass;
         this.context = context;
+        this.listener = listener;
     }
 
     public void setGlyphXContent(String glyphXContent) {
@@ -83,7 +88,7 @@ public class CacheStorage extends ViewModel {
         return ids;
     }
 
-    public Drawable getDrawable(String id) {
+    public Drawable getDrawable(String id, int max) {
         if (drawables == null) {
             ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             int availableMemory = am.getMemoryClass() *1024 *1024;
@@ -97,6 +102,8 @@ public class CacheStorage extends ViewModel {
         }
         Drawable drawable = drawables.get(id);
         if (drawable == null){
+
+            progress(max);
             try {
                 SignProvider signProvider = new SignProvider(context);
                 drawable = signProvider.getSign(id);
@@ -105,6 +112,7 @@ public class CacheStorage extends ViewModel {
                 drawables.put(id, ContextCompat.getDrawable(context, R.drawable.not_found_sign));
                 e.printStackTrace();
             }
+            signCounter++;
         }
         return drawable;
     }
@@ -157,5 +165,17 @@ public class CacheStorage extends ViewModel {
         } catch (TransformerException e) {
             e.printStackTrace();
         }
+    }
+
+    private void progress(int max){
+
+        if (listener != null) {
+            float progress = (float) signCounter / max;
+
+            progress *= 100;
+
+            listener.OnRender(progress, signCounter, max);
+        }
+
     }
 }

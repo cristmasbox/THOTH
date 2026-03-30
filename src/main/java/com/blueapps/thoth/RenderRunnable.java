@@ -28,6 +28,7 @@ public class RenderRunnable implements Runnable {
     @Override
     public void run() {
 
+        listener.onRunnableStart();
         if (!thothView.isAltTextTested()) {
             try {
                 renderClass.renderGlyphXDocument();
@@ -49,7 +50,7 @@ public class RenderRunnable implements Runnable {
             }
         }
 
-        listener.onFinish();
+        listener.onRunnableFinish();
 
     }
 }

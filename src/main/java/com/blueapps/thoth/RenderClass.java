@@ -104,7 +104,7 @@ public class RenderClass extends ViewModel {
     private ArrayList<ValuePair<Float, Float>> getDimensions(ArrayList<String> ids) {
         ArrayList<ValuePair<Float, Float>> dimensions = new ArrayList<>();
         for (String id : ids){
-            Drawable drawable = storage.getDrawable(id);
+            Drawable drawable = storage.getDrawable(id, ids.size());
             dimensions.add(new ValuePair<>(getDrawableWidth(drawable), getDrawableHeight(drawable)));
         }
         return dimensions;

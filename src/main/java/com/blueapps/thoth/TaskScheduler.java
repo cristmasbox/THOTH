@@ -1,4 +1,4 @@
-package com.blueapps.thoth;
+/*package com.blueapps.thoth;
 
 public class TaskScheduler implements RunnableListener{
 
@@ -17,6 +17,12 @@ public class TaskScheduler implements RunnableListener{
         }
     }
 
+    public void shutdown(){
+        worker.interrupt();
+        currentTask = null;
+        nextTask = null;
+    }
+
     @Override
     public void onFinish() {
         currentTask = null;
@@ -28,3 +34,4 @@ public class TaskScheduler implements RunnableListener{
         }
     }
 }
+*/

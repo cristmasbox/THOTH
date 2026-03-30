@@ -28,9 +28,12 @@ import com.blueapps.thoth.cache.CacheStorage;
 
 import org.w3c.dom.Document;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.xml.transform.TransformerException;
 
-public class ThothView extends View {
+public class ThothView extends View implements RunnableListener {
 
     // Constants
     private static final String TAG = "ThothView";
@@ -46,8 +49,11 @@ public class ThothView extends View {
 
     protected boolean unlockDrawing = false;
 
+    private ThothListener listener = null;
+
     private RenderRunnable renderRunnable;
-    private TaskScheduler taskScheduler;
+    //private TaskScheduler taskScheduler;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private CacheStorage storage;
     private RenderClass renderClass;
@@ -144,11 +150,11 @@ public class ThothView extends View {
             }
 
             renderClass.setParams(this);
-            storage.setParams(this.getContext(), renderClass);
+            storage.setParams(this.getContext(), renderClass, listener);
             setGlyphXText(glyphX);
 
-            taskScheduler = new TaskScheduler();
-            renderRunnable = new RenderRunnable(this, renderClass, taskScheduler);
+            //taskScheduler = new TaskScheduler();
+            renderRunnable = new RenderRunnable(this, renderClass, this);
             render();
 
             textPaint.setTextSize(altTextSize);
@@ -169,7 +175,7 @@ public class ThothView extends View {
         if (unlockDrawing){
             int counter = 0;
             for (String id : storage.getIds()) {
-                Drawable drawable = storage.getDrawable(id);
+                Drawable drawable = storage.getDrawable(id, storage.getIds().size());
                 Rect bound = storage.getBounds().get(counter);
                 drawable.setBounds(bound);
                 if (writingDirection == WRITING_DIRECTION_RTL){
@@ -504,7 +510,35 @@ public class ThothView extends View {
     }
 
 
-    private void render(){
-        if (taskScheduler != null) taskScheduler.addTask(renderRunnable);
+    public void setThothListener(ThothListener listener){
+        this.listener = listener;
     }
+
+    public void cancelRender(){
+        if (listener != null) listener.OnRenderCancel();
+        //taskScheduler.shutdown();
+        executorService.shutdownNow();
+        if (storage != null) storage.refreshCache();
+    }
+
+
+    private void render(){
+        //cancelRender();
+        if (renderRunnable != null) executorService.submit(renderRunnable);
+        //taskScheduler.addTask(renderRunnable);
+    }
+
+    // Runnable Listener
+    @Override
+    public void onRunnableStart() {
+        if (listener != null) listener.OnRenderStart();
+    }
+
+    @Override
+    public void onRunnableFinish() {
+        if (listener != null) listener.OnRenderFinished();
+        //taskScheduler.onFinish();
+    }
+
+
 }
