@@ -1,21 +1,21 @@
-[![](https://jitpack.io/v/cristmasbox/THOTH.svg)](https://jitpack.io/#cristmasbox/THOTH)
+[![](https://jitpack.io/v/ThothDroid/THOTH.svg)](https://jitpack.io/#cristmasbox/THOTH)
 
 ![Feature Grafic](IMG_1939.png)
 
 # THOTH (Transliteration and Hieroglyph Output Textview Helper class)
 An android library with a custom TextView for displaying Egyptian hieroglyphs by using the `GlyphX` code.\
-**You can test the THOTH Library using the [THOTH Example App](https://github.com/cristmasbox/THOTH-Example-App).**
+**You can test the THOTH Library using the [THOTH Example App](https://github.com/ThothDroid/THOTH-Example-App).**
 
-*This library is part of the [Egyptian Writer](https://github.com/cristmasbox/Egyptian_Writer) Android App.*
+*This library is part of the [Egyptian Writer](https://github.com/ThothDroid/Egyptian_Writer) Android App.*
 
 ## Disclaimer
 This library uses the `GlyphX` and the `MdC` code for encoding Hieroglyphs.
 
-A library for converting GlyphX to MdC and back is stored here: [GlyphConverter](https://github.com/cristmasbox/GlyphConverter)
+A library for converting GlyphX to MdC and back is stored here: [GlyphConverter](https://github.com/ThothDroid/GlyphConverter)
 
 > [!TIP]
 > **If you only want to calculate the Dimensions and Positions (`Bounds`) of each sign**, then you can use the `MAAT`-library:\
-> [cristmasbox/MAAT](https://github.com/cristmasbox/MAAT)
+> [ThothDroid/MAAT](https://github.com/ThothDroid/MAAT)
 
 ## Implementation with jitpack
 Add this to your `settings.gradle.kts` at the end of repositories:
@@ -31,11 +31,11 @@ dependencyResolutionManagement {
 Then add this dependency to your `build.gradle.kts` file:
 ```
 dependencies {
-  implementation("com.github.cristmasbox:THOTH:2.0.4")
+  implementation("com.github.ThothDroid:THOTH:2.0.4")
 }
 ```
 > [!NOTE]
-> For the implementation for other build systems like `Groovy` see [here](https://jitpack.io/#cristmasbox/THOTH/)
+> For the implementation for other build systems like `Groovy` see [here](https://jitpack.io/#ThothDroid/THOTH/)
 
 ## Implementation with `.aar` file
 Download the `THOTH_debug_versionname.aar` file from this repository, create a `libs` folder in your project directory and paste the file there. Then add this dependency to your `build.gradle.kts` file:
@@ -142,7 +142,7 @@ instead of typing
 <v><h><sign id="V1"/><sign id="V1"/><sign id="V1"/></h><h><sign id="V1"/><sign id="V1"/></h></v>
 ```
 ### 26.10.2025@1.1.1
-Support for MdC input added using the [GlyphConverter](https://github.com/cristmasbox/GlyphConverter) library.
+Support for MdC input added using the [GlyphConverter](https://github.com/ThothDroid/GlyphConverter) library.
 ### 08.11.2025@2.0.0
 Support for brackets in MdC added. Now you can type in:
 ```
@@ -167,6 +167,6 @@ Updated dependencies.
     - `RTL`-layout is supported and the signs are mirrored
     - multiline texts are possible with the `!` and `!!` sign in `MdC` and with `<br/>` and `<pbr/>` in `glyphX`
 ### 16.02.2026@2.0.4
-Now it uses the [SignProvider-Library](https://github.com/cristmasbox/SignProvider) only.
+Now it uses the [SignProvider-Library](https://github.com/ThothDroid/SignProvider) only.
 ### latest Version
 `16.02.2026@2.0.4`
