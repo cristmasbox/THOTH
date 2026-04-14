@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/ThothDroid/THOTH.svg)](https://jitpack.io/#cristmasbox/THOTH)
+[![](https://jitpack.io/v/ThothDroid/THOTH.svg)](https://jitpack.io/#ThothDroid/THOTH)
 
 ![Feature Grafic](IMG_1939.png)
 
