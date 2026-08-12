@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library") version "9.1.0"
+    id("com.android.library") version "9.3.1"
     id("maven-publish")
 }
 
@@ -11,7 +11,7 @@ repositories {
 
 android {
     namespace = "com.blueapps.thoth"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 23
