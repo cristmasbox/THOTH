@@ -66,7 +66,7 @@ afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 from(components["release"])
-                groupId = "com.github.cristmasbox"
+                groupId = "com.github.ThothDroid"
                 artifactId = "THOTH"
                 version = "2.0.4"
             }
