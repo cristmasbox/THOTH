@@ -1,4 +1,12 @@
-[![](https://jitpack.io/v/ThothDroid/THOTH.svg)](https://jitpack.io/#ThothDroid/THOTH)
+[![GitHub Repo stars](https://img.shields.io/github/stars/ThothDroid/THOTH?style=for-the-badge&logo=github&color=yellowgreen)](https://github.com/ThothDroid/THOTH)
+[![Static part of Badge](https://img.shields.io/badge/Part%20of-Egyptian%20Writer%20App-%233DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/ThothDroid/Egyptian_Writer/)
+[![GitHub License](https://img.shields.io/github/license/ThothDroid/THOTH?style=for-the-badge&logo=gnu&color=yellow)](https://github.com/ThothDroid/THOTH?tab=GPL-3.0-1-ov-file)
+[![GitHub forks](https://img.shields.io/github/forks/ThothDroid/THOTH?style=for-the-badge&logo=git&logoColor=white&color=%23F05032)](https://github.com/ThothDroid/THOTH)
+\
+[![jitpack](https://jitpack.io/v/ThothDroid/THOTH.svg)](https://jitpack.io/#ThothDroid/THOTH)
+[![Static wiki Badge](https://img.shields.io/badge/Egyptian%20Writer-WIKI-yellow?style=flat&logo=gitbook&logoColor=white)](https://github.com/ThothDroid/Egyptian_Writer/wiki)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ThothDroid/THOTH?color=blue)](https://github.com/ThothDroid/THOTH)
+[![GitHub Release](https://img.shields.io/github/v/release/ThothDroid/THOTH?color=%23F05032)](https://github.com/ThothDroid/THOTH)
 
 ![Feature Grafic](feature_graphic.png)
 
