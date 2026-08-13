@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/ThothDroid/THOTH.svg)](https://jitpack.io/#ThothDroid/THOTH)
 
-![Feature Grafic](IMG_1939.png)
+![Feature Grafic](feature_graphic.png)
 
 # THOTH (Transliteration and Hieroglyph Output Textview Helper class)
 An android library with a custom TextView for displaying Egyptian hieroglyphs by using the `GlyphX` code.\
