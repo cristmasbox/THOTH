@@ -6,7 +6,7 @@
 [![jitpack](https://jitpack.io/v/ThothDroid/THOTH.svg)](https://jitpack.io/#ThothDroid/THOTH)
 [![Static wiki Badge](https://img.shields.io/badge/Egyptian%20Writer-WIKI-yellow?style=flat&logo=gitbook&logoColor=white)](https://github.com/ThothDroid/Egyptian_Writer/wiki)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ThothDroid/THOTH?color=blue)](https://github.com/ThothDroid/THOTH)
-[![GitHub Release](https://img.shields.io/github/v/release/ThothDroid/THOTH?color=%23F05032)](https://github.com/ThothDroid/THOTH)
+[![GitHub Release](https://img.shields.io/github/v/release/ThothDroid/THOTH?color=%23F05032)](https://github.com/ThothDroid/THOTH/releases/latest)
 
 ![Feature Grafic](feature_graphic.png)
 
