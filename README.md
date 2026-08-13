@@ -168,5 +168,13 @@ Updated dependencies.
     - multiline texts are possible with the `!` and `!!` sign in `MdC` and with `<br/>` and `<pbr/>` in `glyphX`
 ### 16.02.2026@2.0.4
 Now it uses the [SignProvider-Library](https://github.com/ThothDroid/SignProvider) only.
+### 13.08.2026@2.0.5
+- NullPointer Exception when changing properties before onDraw() is called fixed
+- ThothListener added
+- Support for `maat:1.6.0` added:
+  - dependency upgrades
+  - Fixed bug related to `RTL` layout
+  - Support for `space` and `gap` tags added
+- Support for `GlyphConverter:xxx` added:
 ### latest Version
-`16.02.2026@2.0.4`
+`16.02.2026@2.0.5`
