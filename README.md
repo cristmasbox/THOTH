@@ -38,10 +38,10 @@ dependencies {
 > For the implementation for other build systems like `Groovy` see [here](https://jitpack.io/#ThothDroid/THOTH/)
 
 ## Implementation with `.aar` file
-Download the `THOTH_debug_versionname.aar` file from this repository, create a `libs` folder in your project directory and paste the file there. Then add this dependency to your `build.gradle.kts` file:
+Download the [`THOTH_versionname.aar`](https://github.com/ThothDroid/THOTH/releases/latest) file from the latest release, create a `libs` folder in your project directory and paste the file there. Then add this dependency to your `build.gradle.kts` file:
 ```
 dependencies {
-  implementation(files("../libs/THOTH_debug_versionname.aar"))
+  implementation(files("../libs/THOTH_versionname.aar"))
 }
 ```
 
