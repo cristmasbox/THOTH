@@ -129,6 +129,8 @@ and the view will act like if the hieroglyphs are currently loaded into memory. 
 > Especially when the `altTextSize` is very big, the text is not centered vertically.
 
 ## Version Catalog
+> [!IMPORTANT]
+> Since version `13.08.2026@2.0.5` the version catalog uses the new versioning system [see here](https://medium.com/@wassimsakri/the-ultimate-guide-to-versioning-in-software-development-e846eb292a0d).
 ### 05.10.2025@1.0.0
 This is the first release of the THOTH library.
 ### 06.10.2025@1.0.1
