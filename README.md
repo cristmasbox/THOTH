@@ -39,7 +39,7 @@ dependencyResolutionManagement {
 Then add this dependency to your `build.gradle.kts` file:
 ```
 dependencies {
-  implementation("com.github.ThothDroid:THOTH:2.0.4")
+  implementation("com.github.ThothDroid:THOTH:2.0.5")
 }
 ```
 > [!NOTE]
@@ -190,4 +190,4 @@ Now it uses the [SignProvider-Library](https://github.com/ThothDroid/SignProvide
     - `<space/>`: `.`
     - `<gap/>`: `..`
 ### latest Version
-`16.02.2026@2.0.5`
+`13.08.2026@2.0.5`
